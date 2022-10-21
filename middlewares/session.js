@@ -9,6 +9,9 @@ module.exports = () => (req, res, next) => {
 
             //set user to request
             req.user = userData;
+            //add username property to response- everytime if there is username because
+            //this is middleware - res.locals = userData.username
+            res.locals.username = userData.username
         } catch (error) {
             res.clearCookie('token');
             res.redirect('/auth/login');

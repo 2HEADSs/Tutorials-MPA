@@ -5,7 +5,11 @@ function parseError(error) {
     if (error.name == 'ValidationError') {
         //will return array from string with all error from mongoose
         return Object.values(error.errors).map(v => v.message)
-    } else {
+    } else if(Array.isArray(error)){
+        //will return express-validator errors
+        return error.map(x =>x.msg)
+    }
+    else {
         return error.message.split('\n')
     }
 }

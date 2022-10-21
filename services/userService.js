@@ -1,13 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const user = require('../models/User');
 
 const JWT_SECRET = 'q982hdeoaus0ajaa'
 
 async function register(username, password) {
+    
     //check if username is already exist
-
     //collation to search case insensitive
     const existing = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
     if (existing) {
@@ -20,8 +19,6 @@ async function register(username, password) {
         username,
         hashedPassword
     });
-
-    //TODO see assignment if registration creates user session or must render login    
 
     return createSession(user)
 }
@@ -47,7 +44,7 @@ function createSession({ _id, username }) {
     const payload = {
         _id,
         username
-        //TODO SEE IF EXPIRES TIME FOR TOKEN
+        // SEE IF EXPIRES TIME FOR TOKEN
     }
 
     //return token
