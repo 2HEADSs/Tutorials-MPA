@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 //TODO change database according to assignment
-const CONNECTION_STRING = 'mongodb://127.0.0.1:27017/sceletonWithKostadinow'
+const CONNECTION_STRING = 'mongodb://127.0.0.1:27017/tutorialWithKostadinov'
 
 
 ///async because we will use database
