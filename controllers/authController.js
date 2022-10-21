@@ -14,21 +14,21 @@ authController.get('/register', (req, res) => {
 authController.post('/register',
     body('username')
         .isLength({ min: 5 }).withMessage('Username must be at least 5 characters long')
-        .isAlphanumeric().withMessage('May contain only letters and numbers'),
+        .isAlphanumeric().withMessage('Username may contain only letters and numbers'),
     body('password')
         .isLength({ min: 5 }).withMessage('Password must be at least 5 characters long')
-        .isAlphanumeric().withMessage('May contain only letters and numbers'),
+        .isAlphanumeric().withMessage('Password may contain only letters and numbers'),
     async (req, res) => {
 
         try {
             //errors is array - express-validator
             const { errors } = validationResult(req);
-            if (errors.length > 0){
+            if (errors.length > 0) {
                 throw errors
             }
-                if (req.body.password != req.body.repass) {
-                    throw new Error('Passwords don\'t match!')
-                }
+            if (req.body.password != req.body.repass) {
+                throw new Error('Passwords don\'t match!')
+            }
             const token = await register(req.body.username, req.body.password);
 
             res.cookie('token', token)
@@ -48,8 +48,6 @@ authController.post('/register',
     });
 
 authController.get('/login', (req, res) => {
-    // TODO replace with actual view
-
     res.render('login', {
         title: 'Login Page'
     });
@@ -61,9 +59,8 @@ authController.post('/login', async (req, res) => {
 
         //add token to response
         res.cookie('token', token);
-        res.redirect('/');  // TODO replace with redirect  by assignment
+        res.redirect('/');
     } catch (error) {
-        //TODO add error display 
         const errors = parseError(error);
         res.render('login', {
             title: 'Login Page',

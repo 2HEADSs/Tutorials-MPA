@@ -1,11 +1,17 @@
 const homeController = require('express').Router()
 
-//TODO replace with real controller by assignment
 homeController.get('/', (req, res) => {
-    res.render('home', {
-        //title is not nessaccery I made the templete with {{title}}
+    let view;
+    if (req.user) {
+        //user home page
+        view = 'user-home';
+    } else {
+        //guest home page
+        view = 'guest-home';
+    }
+
+    res.render(view, {
         title: 'Home Page',
-        user: req.user
     })
 })
 
