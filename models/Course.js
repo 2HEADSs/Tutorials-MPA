@@ -25,10 +25,18 @@ const courseSchema = new Schema({
             message: 'Invalid URL, must start with HTTP/HTTPS'
         }
     },
-    duration: { type: String, required: true },
-    createdAt: { type: String, required: true },
-    users: { type: [Types.ObjectId], ref: 'User', default: [] },
-    users: { type: Types.ObjectId, ref: 'User' },
+    duration: {
+        type: String, required: true
+    },
+    createdAt: {
+        type: String, required: true, default: () => (new Date()).toISOString().slice(0, 10)
+    },
+    users: {
+        type: [Types.ObjectId], ref: 'User', default: []
+    },
+    owner: {
+        type: Types.ObjectId, ref: 'User'
+    },
 });
 
 courseSchema.index({ title: 1 }, {
@@ -38,6 +46,6 @@ courseSchema.index({ title: 1 }, {
     }
 })
 
-const Couse = model('User', courseSchema);
+const Course = model('Course', courseSchema);
 
-module.exports = Couse
+module.exports = Course
